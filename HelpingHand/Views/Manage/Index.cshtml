@@ -1,0 +1,147 @@
+﻿@model HelpingHand.Models.IndexViewModel
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Manage";
+}
+
+<div id="profile" class="page-layout simple tabbed">
+
+    <!-- HEADER -->
+    <div class="page-header light-fg d-flex flex-column justify-content-center justify-content-lg-end p-6">
+
+        <div class="flex-column row flex-lg-row align-items-center align-items-lg-end no-gutters justify-content-between">
+
+            <div class="user-info flex-column row flex-lg-row no-gutters align-items-center">
+
+                <img class="profile-image avatar huge mr-6" src="~/Content/assets/images/avatars/profile.jpg">
+
+                <div class="name h2 my-6">@User.Identity.GetUserName()</div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="page-content">
+        <p class="text-success">@ViewBag.StatusMessage</p>
+        <h4>Change your account settings</h4>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+            <li class="nav-item">
+                <a class="nav-link btn active" id="timeline-tab" data-toggle="tab" href="#timeline-tab-pane" role="tab" aria-controls="timeline-tab-pane" aria-expanded="true">Password</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link btn" id="about-tab" data-toggle="tab" href="#about-tab-pane" role="tab" aria-controls="about-tab-pane">External Logins</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link btn" id="photos-videos-tab" data-toggle="tab" href="#photos-videos-tab-pane" role="tab" aria-controls="photos-tab-pane">Phone</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link btn" id="twof-tab" data-toggle="tab" href="#twof-pane" role="tab" aria-controls="twof-tab-pane">Two-Factor Authentication</a>
+            </li>
+
+        </ul>
+
+        <div class="tab-content">
+
+            <div role="tabpanel" class="tab-pane fade show active" id="timeline-tab-pane" aria-labelledby="timeline-tab">
+
+                <div class="row">
+
+                    <div class="timeline col-12 col-sm-7 col-xl-9">
+
+                            @if (Model.HasPassword)
+                            {
+                                @Html.ActionLink("Change your password", "ChangePassword")
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Create", "SetPassword")
+                            }
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="about-tab-pane" role="tabpanel" aria-labelledby="about-tab">
+
+                <div class="row">
+
+                    <div class="about col-12 col-md-7 col-xl-9">
+
+
+                                @Model.Logins.Count [
+                                @Html.ActionLink("Manage", "ManageLogins") ]
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="photos-videos-tab-pane" role="tabpanel" aria-labelledby="photos-videos-tab">
+
+                <div class="photos-videos">
+
+                    <div class="period mb-8">
+                        <div class="period-media row no-gutters">
+                            @(Model.PhoneNumber ?? "None")
+                            @if (Model.PhoneNumber != null)
+                            {
+                                <br />
+                                @Html.ActionLink("Change", "AddPhoneNumber")
+                                using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="submit" value="Remove" class="btn-link" />
+                                }
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Add", "AddPhoneNumber")
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade show" id="twof-pane" aria-labelledby="twof-tab">
+
+                <div class="row">
+
+                    <div class="timeline col-12 col-sm-7 col-xl-9">
+
+                            @if (Model.TwoFactor)
+                            {
+                                using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <text>Enabled
+                                        <input type="submit" value="Disable" class="btn btn-link" />
+                                    </text>
+                                }
+                            }
+                            else
+                            {
+                                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <text>Disabled
+                                        <input type="submit" value="Enable" class="btn btn-link" />
+                                    </text>
+                                }
+                            }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- / CONTENT -->
+</div>

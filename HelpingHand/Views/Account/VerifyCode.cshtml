@@ -1,0 +1,97 @@
+﻿@model HelpingHand.Models.VerifyCodeViewModel
+@{
+    ViewBag.Title = "Verify";
+}
+
+<div id="login-v2" class="row no-gutters">
+
+    <div class="intro col-12 col-md light-fg">
+
+        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-left py-16 py-md-32 px-12">
+
+            <div class="logo bg-secondary mb-8">
+                <span>F</span>
+            </div>
+
+            <div class="title">
+                Welcome User
+            </div>
+        </div>
+    </div>
+
+    <div class="form-wrapper col-12 col-md-auto d-flex justify-content-center p-4 p-md-0">
+
+        <div class="form-content md-elevation-8 h-100 bg-white text-auto py-16 py-md-32 px-12">
+
+            <div class="title h5">Log in to your account</div>
+
+            <div class="description mt-2">Use a local account to log in.</div>
+
+            @using (Html.BeginForm("VerifyCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("provider", @Model.Provider)
+                @Html.Hidden("rememberMe", @Model.RememberMe)
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group mb-4">
+                    @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+                    @Html.LabelFor(m => m.Code)
+                </div>
+                @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger" })
+                <div class="form-group mb-4">
+                    @Html.CheckBoxFor(m => m.RememberBrowser)
+                    @Html.LabelFor(m => m.RememberBrowser)
+                </div>
+                <div class="row no-gutters align-items-center flex-nowrap">
+                    <i class="icon icon-checkbox-marked"></i>
+                    @*<span class="px-3">To-Do</span>*@
+                    @Html.CheckBoxFor(m => m.RememberBrowser)
+                    @Html.LabelFor(m => m.RememberBrowser)
+                </div>
+
+                <button type="submit" class="submit-button btn btn-block btn-secondary my-4 mx-auto" aria-label="LOG IN">
+                    Submit
+                </button>
+            }
+
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+@*@using (Html.BeginForm("VerifyCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+@Html.AntiForgeryToken()
+@Html.Hidden("provider", @Model.Provider)
+@Html.Hidden("rememberMe", @Model.RememberMe)
+<h4>Enter verification code</h4>
+<hr />
+@Html.ValidationSummary("", new { @class = "text-danger" })
+<div class="form-group">
+    @Html.LabelFor(m => m.Code, new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <div class="checkbox">
+            @Html.CheckBoxFor(m => m.RememberBrowser)
+            @Html.LabelFor(m => m.RememberBrowser)
+        </div>
+    </div>
+</div>
+
+}*@
+
+

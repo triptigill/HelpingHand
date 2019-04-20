@@ -1,0 +1,95 @@
+﻿@model HelpingHand.Models.VerifyPhoneNumberViewModel
+@{
+    ViewBag.Title = "Verify Phone Number";
+}
+
+<div id="login-v2" class="row no-gutters">
+
+    <div class="intro col-12 col-md light-fg">
+
+        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-left py-16 py-md-32 px-12">
+
+            <div class="logo bg-secondary mb-8">
+                <span>F</span>
+            </div>
+
+            <div class="title">
+                Welcome User
+            </div>
+        </div>
+    </div>
+
+    <div class="form-wrapper col-12 col-md-auto d-flex justify-content-center p-4 p-md-0">
+
+        <div class="form-content md-elevation-8 h-100 bg-white text-auto py-16 py-md-32 px-12">
+            <div class="description mt-2">@ViewBag.Status</div>
+
+
+            <div class="title h5">@ViewBag.Title</div>
+
+
+
+            @using (Html.BeginForm("VerifyPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("phoneNumber", @Model.PhoneNumber)
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group mb-4">
+                    @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+                    @Html.LabelFor(m => m.Code)
+                </div>
+                @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger" })
+
+
+
+
+
+                <button type="submit" class="submit-button btn btn-block btn-secondary my-4 mx-auto" aria-label="LOG IN">
+                    Verify number
+                </button>
+            }
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+@*<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("VerifyPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("phoneNumber", @Model.PhoneNumber)
+    <h4>Enter verification code</h4>
+    <h5>@ViewBag.Status</h5>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Code, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

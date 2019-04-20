@@ -1,0 +1,88 @@
+﻿@using HelpingHand.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<div id="login-v2" class="row no-gutters">
+
+    <div class="intro col-12 col-md light-fg">
+
+        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-left py-16 py-md-32 px-12">
+
+            <div class="logo bg-secondary mb-8">
+                <span>F</span>
+            </div>
+
+            <div class="title">
+                Welcome User
+            </div>
+        </div>
+    </div>
+
+    <div class="form-wrapper col-12 col-md-auto d-flex justify-content-center p-4 p-md-0">
+
+        <div class="form-content md-elevation-8 h-100 bg-white text-auto py-16 py-md-32 px-12">
+
+            <div class="title h5">Log in to your account</div>
+
+           
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group mb-4">
+                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                    @Html.LabelFor(m => m.Username)
+                </div>
+                @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+
+                <div class="form-group mb-4">
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                    @Html.LabelFor(m => m.Password)
+                </div>
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+                <div class="remember-forgot-password row no-gutters align-items-center justify-content-between pt-4">
+
+                    <div class="form-check remember-me mb-4">
+                        <label class="form-check-label">
+                            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input" })
+                            <span class="checkbox-icon"></span>
+                            <span class="form-check-description">Remember Me</span>
+                        </label>
+                    </div>
+                    @Html.ActionLink("Forgot Password?", "ForgotPassword", null, new { @class = "forgot-password text-secondary mb-4" })
+
+                </div>
+
+                <button type="submit" class="submit-button btn btn-block btn-secondary my-4 mx-auto" aria-label="LOG IN">
+                    LOG IN
+                </button>
+            }
+
+            @*<div class="separator">
+                <span class="text">OR</span>
+            </div>
+
+            <section id="socialloginform">
+                @Html.Partial("_externalloginslistpartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.returnurl })
+            </section>
+
+            <div class="register d-flex flex-column flex-sm-row align-items-center justify-content-center mt-8 mb-6 mx-auto">
+                <span class="text mr-sm-2">Don't have an account?</span>
+                @Html.ActionLink("Create an account", "Register", null, new { @class = "link text-secondary" })
+            </div>*@
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

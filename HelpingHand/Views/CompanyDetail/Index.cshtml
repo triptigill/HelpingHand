@@ -1,0 +1,145 @@
+﻿@model IEnumerable<HelpingHand.Models.CompanyDetail>
+@{
+    ViewBag.Title = " Manage Company ";
+}
+<div class="doc data-table-doc page-layout simple full-width">
+    <!-- HEADER -->
+    <div class="page-header bg-primary text-auto p-6 row no-gutters align-items-center justify-content-between">
+        <h1 class="doc-title h4" id="content">@ViewBag.Title</h1>
+        <div class="col-auto">
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-light fuse-ripple-ready" })
+        </div>
+    </div>
+
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="page-content p-6">
+        <div class="content container">
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="example ">
+
+                        <div class="description">
+                            <div class="description-text">
+
+                                <h3>Company List</h3>
+
+                            </div>
+                            <div class="toggle-source-preview">
+
+                                <i class="icon icon-eye-outline"></i>
+                            </div>
+                        </div>
+
+                        <div class="source-preview-wrapper">
+                            <div class="preview">
+                                <div class="preview-elements">
+
+                                    <table id="tbl" class="table table-striped table-bordered" style="width:100%;">
+                                        <thead class="table-bordered">
+                                            <tr>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">  @Html.DisplayNameFor(model => model.CompanyName)</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">  @Html.DisplayNameFor(model => model.Address)</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">@Html.DisplayNameFor(model => model.City)</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">  @Html.DisplayNameFor(model => model.PIN)</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">   @Html.DisplayNameFor(model => model.Telephone)</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">  @Html.DisplayNameFor(model => model.VAT)</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.ActionLink(item.CompanyName, "Edit", new { id = item.CompanyId }, new { @class = "link" })
+                                                        @*<a href="/CompanyMaster/Edit/@item.CompanyId"> @Html.DisplayFor(modelItem => item.CompanyName)</a>*@
+
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Address)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.City)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.PIN)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Telephone)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.VAT)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        @using (Html.BeginForm("Index", "CompanyDetail", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <input type="file" name="postedFile" />
+                            <input type="submit" value="Import" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CONTENT -->
+
+</div>
+<!-- Data tables -->
+<script type="text/javascript" src="~/Content/assets/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="~/Content/assets/node_modules/datatables-responsive/js/dataTables.responsive.js"></script><!-- Data tables -->
+<script type="text/javascript" src="~/Content/assets/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="~/Content/assets/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css" />
+<script href="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<script href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"></script>
+<script href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"></script>
+<script>
+    var oTable = $('#tbl').dataTable({
+        "bServerSide": true,
+        "sAjaxSource": "/CompanyDetail/GetPatientList",
+        "sServerMethod": "POST",
+        "aoColumns": [
+            { "mData": "CompanyName" },
+            { "mData": "Address" },
+            { "mData": "City" },
+            { "mData": "PIN" },
+            { "mData": "Telephone" },
+            { "mData": "VAT" },
+
+
+        ],
+    });
+</script>  

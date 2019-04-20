@@ -1,0 +1,112 @@
+﻿@model HelpingHand.Models.ClientDetail
+
+@{
+    ViewBag.Title = " Manage Customer";
+}
+
+<div class="doc forms-doc page-layout simple full-width">
+    <div class="page-header bg-primary text-auto p-6 row no-gutters align-items-center justify-content-between">
+        <h1 class="doc-title h4" id="content">@ViewBag.Title</h1>
+    </div>
+    <div class="page-content p-6">
+        <div class="content container">
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <div class="example">
+                        <div class="description">
+                            <div class="description-text">
+                                <h5> Edit Customer</h5>
+                            </div>
+                        </div>
+                        <div class="source-preview-wrapper">
+                            <div class="preview">
+                                <div class="preview-elements">
+                                    @using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(model => model.ClientId)
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.LabelFor(model => model.ClientName)
+                                                @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "invalid-feedback" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.LabelFor(model => model.Address1)
+                                                @Html.ValidationMessageFor(model => model.Address1, "", new { @class = "invalid-feedback" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.LabelFor(model => model.Address2)
+                                                @Html.ValidationMessageFor(model => model.Address2, "", new { @class = "invalid-feedback" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.LabelFor(model => model.Mobile)
+                                                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "invalid-feedback" })
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.LabelFor(model => model.Telephone)
+                                                @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "invalid-feedback" })
+
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.LabelFor(model => model.Email)
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "invalid-feedback" })
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <button type="submit" class="btn btn-primary" style="margin-right:30px">Save</button>
+                                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+                                        </div>
+
+                                        }
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h2>Modal Example</h2>
+    <!-- Trigger the modal with a button -->
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure .you want to delete?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Confirm</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

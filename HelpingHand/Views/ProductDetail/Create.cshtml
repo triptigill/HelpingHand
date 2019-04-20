@@ -1,0 +1,131 @@
+﻿@model HelpingHand.Models.ProductDetail
+
+@{
+    ViewBag.Title = "Manage Product";
+}
+
+<div class="doc forms-doc page-layout simple full-width">
+    <div class="page-header bg-primary text-auto p-6 row no-gutters align-items-center justify-content-between">
+        <h1 class="doc-title h4" id="content">@ViewBag.Title</h1>
+    </div>
+    <div class="page-content p-6">
+        <div class="content container">
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <div class="example">
+                        <div class="description">
+                            <div class="description-text">
+                                <h5>Create Product </h5>
+                            </div>
+                        </div>
+                        <div class="source-preview-wrapper">
+                            <div class="preview">
+                                <div class="preview-elements">
+                                    @using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.LabelFor(model => model.Title)
+                                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "invalid-feedback" })
+                                                </div>
+                                                <div class="form-group" >
+                                                    @Html.LabelFor(model => model.Booktype)
+                                                    @Html.DropDownListFor(model => model.Booktype, new SelectList(@ViewBag.BookTypes, "Value", "Text"), new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Booktype, "", new { @class = "invalid-feedback" })
+                                                </div>
+
+                                                @*<div class="form-group">
+                                                    @Html.EditorFor(model => model.BookSubType, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.LabelFor(model => model.BookSubType)
+                                                    @Html.ValidationMessageFor(model => model.BookSubType, "", new { @class = "invalid-feedback" })
+                                                </div>*@
+
+                                                <div class="form-group">
+                                                    @*@Html.DropDownList("Group", new SelectList(ViewBag.Group, "Group", "Group"))*@
+                                                    @*@Html.DropDownListFor(model => model.Group, new SelectList(@ViewBag.Grouplist, "Value", "Text"))*@
+                                                    @Html.LabelFor(model => model.Group)
+                                                    @Html.EditorFor(model => model.Group, new { htmlAttributes = new { @class = "form-control", list = "groupList" } })
+                                                    <datalist id="groupList">
+
+                                                    </datalist>
+                                                    @*@Html.DropDownList(" ViewBag.Grouplist", (IEnumerable<SelectListItem>)ViewBag.Locations, new { id = "ddlLocations", @class = "form-control" })*@
+                                                    @*@Html.DropDownList("Group", ViewBag.Grouplist as SelectList)*@
+                                                    @*@Html.DropDownList("Grouplist", (IEnumerable<SelectListItem>)ViewData["Grouplist"])*@
+                                                    @Html.ValidationMessageFor(model => model.Group, "", new { @class = "invalid-feedback" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mb-2">
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Writer, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.LabelFor(model => model.Writer)
+                                                    @Html.ValidationMessageFor(model => model.Writer, "", new { @class = "invalid-feedback" })
+
+                                                </div>
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.LabelFor(model => model.ProductCode)
+                                                    @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "invalid-feedback" })
+
+                                                </div>
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.LabelFor(model => model.Price)
+                                                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "invalid-feedback" })
+
+                                                </div>
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.LabelFor(model => model.Description)
+                                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "invalid-feedback" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Create </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#Booktype").change(function () {
+            var data = $('#Booktype option:selected').val();
+            $.ajax({
+                'url': '/ProductDetail/GetGroups',
+                'type': 'GET',
+                data: { 'bookType': data },
+                dataType: "json",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    console.log(data);
+                    //var option = '<select id="value-select" class="form-control">';
+                    //option += '<option Selected disabled>Select value....</option >';
+                    //for (var i = 0; i < data.length; i++) {
+                    //    option += '<option value="' + data[i].text + '">' + data[i].value + '</option>';
+                       // option += '<option value="' + data.text [i]+ '">' + data.value[i] + '</option>';
+                    //}
+                    $('#groupList').empty();
+                    $.each(data, function (key, value) {
+                        $('#groupList')
+                            .append($("<option></option>")
+                                .attr("value", value)
+                                .text(value));
+                    });
+                   
+                }
+            });
+
+        });
+    });
+</script>

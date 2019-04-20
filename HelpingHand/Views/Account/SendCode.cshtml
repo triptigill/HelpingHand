@@ -1,0 +1,53 @@
+﻿@model HelpingHand.Models.SendCodeViewModel
+@{
+                
+
+                ViewBag.Title = "Send";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<div id="login-v2" class="row no-gutters">
+
+    <div class="intro col-12 col-md light-fg">
+
+        <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-left py-16 py-md-32 px-12">
+
+            <div class="logo bg-secondary mb-8">
+                <span>F</span>
+            </div>
+
+            <div class="title">
+                Welcome User
+            </div>
+        </div>
+    </div>
+
+    <div class="form-wrapper col-12 col-md-auto d-flex justify-content-center p-4 p-md-0">
+
+        <div class="form-content md-elevation-8 h-100 bg-white text-auto py-16 py-md-32 px-12">
+
+            <div class="title h5"> Select Two-Factor Authentication Provider:</div>
+
+            <div class="description mt-2">Use a local account to log in.</div>
+
+            @using (Html.BeginForm("SendCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+
+                @Html.AntiForgeryToken()
+                @Html.Hidden("rememberMe", @Model.RememberMe)
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                @Html.DropDownListFor(model => model.SelectedProvider, Model.Providers)
+                <button type="submit" class="submit-button btn btn-block btn-secondary my-4 mx-auto" aria-label="LOG IN">
+                    LOG IN
+                </button>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

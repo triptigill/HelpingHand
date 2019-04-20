@@ -1,0 +1,80 @@
+﻿@using reCAPTCHA.MVC
+@model HelpingHand.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<div class="content custom-scrollbar">
+ <div id="register-v2" class="row no-gutters">
+ <div class="intro col-12 col-md light-fg">
+ <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-left py-16 py-md-32 px-12">
+<div class="logo bg-secondary mb-8">
+                    <span>F</span>
+                </div>
+<div class="title">
+                    Welcome to the FUSE!
+                </div>
+     <div class="description pt-2">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ullamcorper nisl erat, vel convallis elit fermentum pellentesque. Sed mollis velit facilisis facilisis viverra.
+                </div>
+         </div>
+        </div>
+        <div class="form-wrapper col-12 col-md-auto d-flex justify-content-center p-4 p-md-0">
+            <div class="form-content md-elevation-8 h-100 bg-white text-auto py-16 py-md-32 px-12">
+          <div class="title h5">Create account</div>
+      @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <div class="form-group mb-4">
+                        @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.Firstname, new { @class = "col-md-2 control-label" })
+                    </div>
+                    <div class="form-group mb-4">
+                        @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.Lastname, new { @class = "col-md-2 control-label" })
+                    </div>
+                    <div class="form-group mb-4">
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    </div>
+                    <div class="form-group mb-4">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    </div>
+                    <div class="form-group mb-4">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    </div>
+                    <div class="form-group mb-4">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+
+                    </div>
+                    //<div class="g-recaptcha" data-sitekey="6LfILI0UAAAAACjrZV1_YPlUD-kVWMYsQOVYzWkA"></div>
+                    @Html.Recaptcha()
+                    @Html.ValidationMessage("ReCaptcha")
+                    <div class="form-group mb-4">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" class="submit-button btn btn-block btn-secondary my-4 mx-auto" value="Register" />
+                        </div>
+                    </div>
+                    <div class="login d-flex flex-column flex-sm-row align-items-center justify-content-center mt-8 mb-6 mx-auto">
+                        <span class="text mr-sm-2">Already have an account?</span>
+                        <a class="link text-secondary" href="pages-auth-login-v2.html">Log in</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
